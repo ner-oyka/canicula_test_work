@@ -1,8 +1,8 @@
-using EventBusSystem;
+п»їusing EventBusSystem;
 using UnityEngine;
 
 public interface IPlayerInteractionHandler : IGlobalSubscriber
 {
-    //Event отправляется после нажатия на зону
+    //Event РѕС‚РїСЂР°РІР»СЏРµС‚СЃСЏ РїРѕСЃР»Рµ РЅР°Р¶Р°С‚РёСЏ РЅР° Р·РѕРЅСѓ
     void OnClickArea(Vector2 pos, int layer);
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EventBusSystem;
@@ -17,13 +17,13 @@ public class PlayerInteraction : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            //Игонирурем все слои, кроме выбранных (пляж, море, небо)
+            //РРіРѕРЅРёСЂСѓСЂРµРј РІСЃРµ СЃР»РѕРё, РєСЂРѕРјРµ РІС‹Р±СЂР°РЅРЅС‹С… (РїР»СЏР¶, РјРѕСЂРµ, РЅРµР±Рѕ)
             int layerMasks = ~(1 << 5);
             RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 1000f, layerMasks);
 
             if (hit.collider != null)
             {
-                //Отправляем событие нажатия на зону
+                //РћС‚РїСЂР°РІР»СЏРµРј СЃРѕР±С‹С‚РёРµ РЅР°Р¶Р°С‚РёСЏ РЅР° Р·РѕРЅСѓ
                 EventBus.RaiseEvent<IPlayerInteractionHandler>(h => h.OnClickArea(hit.point, hit.transform.gameObject.layer));
             }
         }

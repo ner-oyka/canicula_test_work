@@ -1,11 +1,11 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EventBusSystem;
 
 public class EntitySpawner : MonoBehaviour, IPlayerInteractionHandler
 {
-    //Содержит список Scribtable objects зон в которых содержатся данные по объектам спавна
+    //РЎРѕРґРµСЂР¶РёС‚ СЃРїРёСЃРѕРє Scribtable objects Р·РѕРЅ РІ РєРѕС‚РѕСЂС‹С… СЃРѕРґРµСЂР¶Р°С‚СЃСЏ РґР°РЅРЅС‹Рµ РїРѕ РѕР±СЉРµРєС‚Р°Рј СЃРїР°РІРЅР°
     [SerializeField]
     private List<AreaEntitiesScriptableObject> areaEntities = new List<AreaEntitiesScriptableObject> ();
 
@@ -21,24 +21,24 @@ public class EntitySpawner : MonoBehaviour, IPlayerInteractionHandler
 
     public void OnClickArea(Vector2 pos, int layer)
     {
-        //Находим зону на которую кликнули
+        //РќР°С…РѕРґРёРј Р·РѕРЅСѓ РЅР° РєРѕС‚РѕСЂСѓСЋ РєР»РёРєРЅСѓР»Рё
         AreaEntitiesScriptableObject area = areaEntities.Find(h => h.layerName == LayerMask.LayerToName(layer));
         if (area != null)
         {
-            //Рандомно находим объект для спавна
+            //Р Р°РЅРґРѕРјРЅРѕ РЅР°С…РѕРґРёРј РѕР±СЉРµРєС‚ РґР»СЏ СЃРїР°РІРЅР°
             int entitySpawnIndex = Random.Range(0, area.entities.Count);
             Entity ent = area.entities[entitySpawnIndex];
-            //Находим gameobject родитель для объекта
+            //РќР°С…РѕРґРёРј gameobject СЂРѕРґРёС‚РµР»СЊ РґР»СЏ РѕР±СЉРµРєС‚Р°
             Transform areaTransform = GameObject.Find("Art").transform.Find(area.layerName);
 
-            //если доступен спавн
+            //РµСЃР»Рё РґРѕСЃС‚СѓРїРµРЅ СЃРїР°РІРЅ
             if (IsAvaliable(areaTransform, ent.typeId, ent.maxCount))
             {
                 SpawnEntity(area, ent, pos, areaTransform);
             }
             else
             {
-                //если спавн случайно выбранного объекта не доступен, то ищем доступный и спавним
+                //РµСЃР»Рё СЃРїР°РІРЅ СЃР»СѓС‡Р°Р№РЅРѕ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° РЅРµ РґРѕСЃС‚СѓРїРµРЅ, С‚Рѕ РёС‰РµРј РґРѕСЃС‚СѓРїРЅС‹Р№ Рё СЃРїР°РІРЅРёРј
                 foreach (var e in area.entities)
                 {
                     if (IsAvaliable(areaTransform, e.typeId, e.maxCount))
@@ -55,12 +55,12 @@ public class EntitySpawner : MonoBehaviour, IPlayerInteractionHandler
     }
 
     /// <summary>
-    /// Спавн нового объекта на выбронную зону
+    /// РЎРїР°РІРЅ РЅРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° РЅР° РІС‹Р±СЂРѕРЅРЅСѓСЋ Р·РѕРЅСѓ
     /// </summary>
-    /// <param name="area">Зона по которой кликнули</param>
-    /// <param name="entity">Выбранный объект спавна</param>
-    /// <param name="pos">Место, куда кликнули</param>
-    /// <param name="parent">GameObject-родитель для объекта</param>
+    /// <param name="area">Р—РѕРЅР° РїРѕ РєРѕС‚РѕСЂРѕР№ РєР»РёРєРЅСѓР»Рё</param>
+    /// <param name="entity">Р’С‹Р±СЂР°РЅРЅС‹Р№ РѕР±СЉРµРєС‚ СЃРїР°РІРЅР°</param>
+    /// <param name="pos">РњРµСЃС‚Рѕ, РєСѓРґР° РєР»РёРєРЅСѓР»Рё</param>
+    /// <param name="parent">GameObject-СЂРѕРґРёС‚РµР»СЊ РґР»СЏ РѕР±СЉРµРєС‚Р°</param>
     private void SpawnEntity(AreaEntitiesScriptableObject area, Entity entity, Vector3 pos, Transform parent)
     {
         GameObject go = Instantiate(entity.prefab);
@@ -69,20 +69,20 @@ public class EntitySpawner : MonoBehaviour, IPlayerInteractionHandler
         go.transform.parent = parent;
         go.GetComponent<SpawnedEntity>().typeId = entity.typeId;
 
-        //Если включена динамичкая сортировка спрайтов
+        //Р•СЃР»Рё РІРєР»СЋС‡РµРЅР° РґРёРЅР°РјРёС‡РєР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР° СЃРїСЂР°Р№С‚РѕРІ
         if (area.useDynamicSortingOrder)
         {
-            //порядок сортировки равен y координате места, куда кликнули
+            //РїРѕСЂСЏРґРѕРє СЃРѕСЂС‚РёСЂРѕРІРєРё СЂР°РІРµРЅ y РєРѕРѕСЂРґРёРЅР°С‚Рµ РјРµСЃС‚Р°, РєСѓРґР° РєР»РёРєРЅСѓР»Рё
             go.GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(pos.y * -10);
         }
     }
 
     /// <summary>
-    /// Проверяет, доступен ли для спавна объект. Если maxCount указан -1, то объект всегда дотупен для спавна (в примере это корабль - единственный объект в зоне моря)
+    /// РџСЂРѕРІРµСЂСЏРµС‚, РґРѕСЃС‚СѓРїРµРЅ Р»Рё РґР»СЏ СЃРїР°РІРЅР° РѕР±СЉРµРєС‚. Р•СЃР»Рё maxCount СѓРєР°Р·Р°РЅ -1, С‚Рѕ РѕР±СЉРµРєС‚ РІСЃРµРіРґР° РґРѕС‚СѓРїРµРЅ РґР»СЏ СЃРїР°РІРЅР° (РІ РїСЂРёРјРµСЂРµ СЌС‚Рѕ РєРѕСЂР°Р±Р»СЊ - РµРґРёРЅСЃС‚РІРµРЅРЅС‹Р№ РѕР±СЉРµРєС‚ РІ Р·РѕРЅРµ РјРѕСЂСЏ)
     /// </summary>
-    /// <param name="area">GameObject-родитель, в котором спавнятся объекты</param>
-    /// <param name="typeId">Тип объекта</param>
-    /// <param name="maxCount">Максимальное кол-во одновременно находящихся в зоне объектов</param>
+    /// <param name="area">GameObject-СЂРѕРґРёС‚РµР»СЊ, РІ РєРѕС‚РѕСЂРѕРј СЃРїР°РІРЅСЏС‚СЃСЏ РѕР±СЉРµРєС‚С‹</param>
+    /// <param name="typeId">РўРёРї РѕР±СЉРµРєС‚Р°</param>
+    /// <param name="maxCount">РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»-РІРѕ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ РЅР°С…РѕРґСЏС‰РёС…СЃСЏ РІ Р·РѕРЅРµ РѕР±СЉРµРєС‚РѕРІ</param>
     /// <returns></returns>
     private bool IsAvaliable(Transform area, int typeId, int maxCount)
     {
@@ -108,7 +108,7 @@ public class EntitySpawner : MonoBehaviour, IPlayerInteractionHandler
     }
 
     /// <summary>
-    /// Проверяем gameobject потомков на количество. Если больше 5, то удаляем самый первый
+    /// РџСЂРѕРІРµСЂСЏРµРј gameobject РїРѕС‚РѕРјРєРѕРІ РЅР° РєРѕР»РёС‡РµСЃС‚РІРѕ. Р•СЃР»Рё Р±РѕР»СЊС€Рµ 5, С‚Рѕ СѓРґР°Р»СЏРµРј СЃР°РјС‹Р№ РїРµСЂРІС‹Р№
     /// </summary>
     /// <param name="area"></param>
     private void RefreshAreaEntities(Transform area)
