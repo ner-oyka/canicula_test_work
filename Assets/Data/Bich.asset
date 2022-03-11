@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed890c875d1217439853222fbb0327c, type: 3}
+  m_Name: Bich
+  m_EditorClassIdentifier: 
+  layerName: Bich
+  entities:
+  - prefab: {fileID: 8180611109961759298, guid: 8fe900de743e33e46b9ff39575868c86, type: 3}
+    maxCount: 2
+    typeId: 7
+  - prefab: {fileID: 7431410176673430809, guid: 9b54b9d75bd8fec4cadddb53497322b6, type: 3}
+    maxCount: 3
+    typeId: 8
+  - prefab: {fileID: 8440359174860008338, guid: 2fc9d33c78ca8eb4aaba1172e8d9ad46, type: 3}
+    maxCount: 2
+    typeId: 9
+  maxCount: 5
+  useDynamicSortingOrder: 1
